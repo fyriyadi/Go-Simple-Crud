@@ -93,6 +93,10 @@ func DeleteTodoID(c *gin.Context) {
 	}
 	db.Raw("SELECT title, body FROM todos WHERE id = ? ", id)
 
+	var todo models.Todo
+	db.First(&todo, id)
+	db.Delete(&todo)
+
 	c.JSON(200, gin.H{
 		"message": "data deleted",
 	})

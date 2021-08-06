@@ -5,6 +5,7 @@ import (
 	"gocrud/controllers"
 	"gocrud/models"
 
+	// "fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -22,6 +23,7 @@ func main() {
 
 	r := gin.Default()
 
+	r.GET("/", controllers.HomeView)
 	r.GET("/todolist", controllers.GetToDoList)
 	r.GET("/todo/:id", controllers.GetTodoID)
 	r.POST("/todo/add", controllers.AddTodo)

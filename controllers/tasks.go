@@ -45,19 +45,24 @@ func AddTodo(c *gin.Context) {
 	title := c.PostForm("title")
 	body := c.PostForm("body")
 
-	dsn := "host=localhost user=golanguser password=passwordgolanguser dbname=golangdb port=5432 sslmode=disable TimeZone=Asia/Bangkok"
+	dsn := "host=localhost user=golanguser password=passwordgolanguse dbname=golangdb port=5432 sslmode=disable TimeZone=Asia/Bangkok"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic("failed to connect database")
+		// panic("failed to connect database")
+		c.JSON(200, gin.H{
+			"message": "failed to connect to database",
+		})
+	}else{
+		todo := models.Todo{Title: title, Body: body}
+		db.Create(&todo)
+
+		c.JSON(200, gin.H{
+			"message": "data added",
+		})
+
 	}
 
-	todo := models.Todo{Title: title, Body: body}
-	db.Create(&todo)
-
-	c.JSON(200, gin.H{
-		"message": "data added",
-	})
-
+	
 }
 
 func UpdateTodoID(c *gin.Context) {

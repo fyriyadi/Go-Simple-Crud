@@ -1,4 +1,4 @@
-module gocrud
+module github.com/fyriyadi/Go-Simple-Crud
 
 go 1.16
 

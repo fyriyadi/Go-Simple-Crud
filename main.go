@@ -2,8 +2,8 @@ package main
 
 import (
 	// "net/http"
-	"gocrud/controllers"
-	"gocrud/models"
+	"github.com/fyriyadi/Go-Simple-Crud/controllers"
+	"github.com/fyriyadi/Go-Simple-Crud/models"
 
 	// "fmt"
 	"github.com/gin-gonic/gin"

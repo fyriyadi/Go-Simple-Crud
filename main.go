@@ -3,32 +3,28 @@ package main
 import (
 	// "net/http"
 	"github.com/fyriyadi/Go-Simple-Crud/controllers"
-	"github.com/fyriyadi/Go-Simple-Crud/models"
+	"github.com/fyriyadi/Go-Simple-Crud/database"
+	"github.com/fyriyadi/Go-Simple-Crud/server"
 
 	// "fmt"
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
 func main() {
 
-	dsn := "host=localhost user=golanguser password=passwordgolanguser dbname=golangdb port=5432 sslmode=disable TimeZone=Asia/Jakarta"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	// dsn := "host=localhost user=golanguser password=passwordgolanguser dbname=golangdb port=5432 sslmode=disable TimeZone=Asia/Jakarta"
+	// db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
-	if err != nil {
-		panic("failed to connect database")
-	}
-	db.AutoMigrate(&models.Todo{})
+	// if err != nil {
+	// 	panic("failed to connect database")
+	// }
+	// db.AutoMigrate(&models.Todo{})
 
 	r := gin.Default()
-
-	r.GET("/", controllers.HomeView)
-	r.GET("/todolist", controllers.GetToDoList)
-	r.GET("/todo/:id", controllers.GetTodoID)
-	r.POST("/todo/add", controllers.AddTodo)
-	r.PUT("/todo/:id", controllers.UpdateTodoID)
-	r.DELETE("/todo/:id", controllers.DeleteTodoID)
+	db := database.PostgresqlConnect()
+	inDB := &controllers.InDB{DB: db}
+	server.Routes(r, inDB)
 	r.Run()
+	// r.GET("/todolist", inDB.GetToDoList)
 
 }
